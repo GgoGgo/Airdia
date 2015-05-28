@@ -31,6 +31,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Air_logo23.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -94,6 +98,9 @@
     <None Include="Resources\saved.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="air_icon.ico" />
+    <Content Include="air_icon2.ico" />
+    <Content Include="Air_logo23.ico" />
     <Content Include="CSS\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

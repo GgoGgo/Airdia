@@ -212,6 +212,7 @@
             this.Controls.Add(this.EditBox);
             this.Controls.Add(this.MarkDownBrowse);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
