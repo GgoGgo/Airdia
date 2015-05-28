@@ -1,0 +1,10 @@
+C:\dev\airdia\airdia\bin\Debug\airdia.exe.config
+C:\dev\airdia\airdia\bin\Debug\airdia.exe
+C:\dev\airdia\airdia\bin\Debug\airdia.pdb
+C:\dev\airdia\airdia\obj\Debug\airdia.MainForm.resources
+C:\dev\airdia\airdia\obj\Debug\airdia.Properties.Resources.resources
+C:\dev\airdia\airdia\obj\Debug\airdia.csproj.GenerateResource.Cache
+C:\dev\airdia\airdia\obj\Debug\airdia.exe
+C:\dev\airdia\airdia\obj\Debug\airdia.pdb
+C:\dev\airdia\airdia\obj\Debug\airdia.csprojResolveAssemblyReference.cache
+C:\dev\Airdia\airdia\bin\Debug\CSS\default.css
