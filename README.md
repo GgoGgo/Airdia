@@ -19,3 +19,6 @@ ctrl + s : save
 1. inject meta data charset utf8
 2. image need to be imported to directory with file browser
 3. willing to add emmet like feature
+3. allow user to setup home directory( and make default one at c:/airdia )
+4. allow user to write mathmatic expression
+5. add many convenient shorcut
