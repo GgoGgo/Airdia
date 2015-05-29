@@ -36,15 +36,16 @@
             this.DatePicker = new System.Windows.Forms.DateTimePicker();
             this.MarkDownBrowse = new System.Windows.Forms.WebBrowser();
             this.label1 = new System.Windows.Forms.Label();
-            this.SaveButton = new System.Windows.Forms.Button();
             this.EditBox = new System.Windows.Forms.RichTextBox();
             this.Saved = new System.Windows.Forms.PictureBox();
             this.NotExist = new System.Windows.Forms.PictureBox();
             this.ExitButton = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.SaveButton = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.Saved)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NotExist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SaveButton)).BeginInit();
             this.SuspendLayout();
             // 
             // FileTree
@@ -83,7 +84,7 @@
             this.ModeEdit.AutoSize = true;
             this.ModeEdit.Font = new System.Drawing.Font("Inconsolata", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ModeEdit.ForeColor = System.Drawing.Color.Ivory;
-            this.ModeEdit.Location = new System.Drawing.Point(372, 12);
+            this.ModeEdit.Location = new System.Drawing.Point(424, 12);
             this.ModeEdit.Name = "ModeEdit";
             this.ModeEdit.Size = new System.Drawing.Size(58, 19);
             this.ModeEdit.TabIndex = 6;
@@ -98,7 +99,7 @@
             this.DatePicker.CalendarMonthBackground = System.Drawing.Color.Crimson;
             this.DatePicker.CalendarTitleForeColor = System.Drawing.Color.Ivory;
             this.DatePicker.Font = new System.Drawing.Font("나눔고딕", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.DatePicker.Location = new System.Drawing.Point(640, 29);
+            this.DatePicker.Location = new System.Drawing.Point(790, 29);
             this.DatePicker.Margin = new System.Windows.Forms.Padding(0);
             this.DatePicker.Name = "DatePicker";
             this.DatePicker.Size = new System.Drawing.Size(160, 21);
@@ -128,17 +129,6 @@
             this.label1.Size = new System.Drawing.Size(65, 19);
             this.label1.TabIndex = 11;
             this.label1.Text = "PATH";
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.Location = new System.Drawing.Point(808, 26);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(75, 23);
-            this.SaveButton.TabIndex = 12;
-            this.SaveButton.TabStop = false;
-            this.SaveButton.Text = "Save";
-            this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // EditBox
             // 
@@ -193,6 +183,17 @@
             this.timer1.Interval = 10;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // SaveButton
+            // 
+            this.SaveButton.Image = global::airdia.Properties.Resources.sb2;
+            this.SaveButton.Location = new System.Drawing.Point(368, 12);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(50, 18);
+            this.SaveButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.SaveButton.TabIndex = 15;
+            this.SaveButton.TabStop = false;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -200,8 +201,8 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Crimson;
             this.ClientSize = new System.Drawing.Size(1000, 600);
-            this.Controls.Add(this.Saved);
             this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.Saved);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.NotExist);
             this.Controls.Add(this.DatePicker);
@@ -219,6 +220,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Saved)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NotExist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ExitButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SaveButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,11 +235,11 @@
         private System.Windows.Forms.DateTimePicker DatePicker;
         private System.Windows.Forms.PictureBox NotExist;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.RichTextBox EditBox;
         private System.Windows.Forms.PictureBox Saved;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.WebBrowser MarkDownBrowse;
+        private System.Windows.Forms.PictureBox SaveButton;
     }
 }
 

@@ -104,6 +104,8 @@
     <Content Include="CSS\default.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\sb2.png" />
+    <None Include="Resources\sb.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
