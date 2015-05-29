@@ -36,7 +36,7 @@ namespace airdia
             {
                 HTMLDocument docs = (HTMLDocument)MarkDownBrowse.Document.DomDocument;
                 IHTMLStyleSheet ss = docs.createStyleSheet("", 0);
-                string tmp = File.ReadAllText("CSS\\default.css");
+                string tmp = Properties.Resources._default;
                 ss.cssText = tmp;
             }
             catch(Exception ex){

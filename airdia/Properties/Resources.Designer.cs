@@ -61,6 +61,41 @@ namespace airdia.Properties {
         }
         
         /// <summary>
+        ///   body {
+        ///   font-family: 나눔고딕;
+        ///   font-size: 14px;
+        ///   line-height: 1.6;
+        ///   padding-top: 10px;
+        ///   padding-bottom: 10px;
+        ///   background-color: white;
+        ///   padding: 30px;}
+        ///
+        ///body &gt; *:first-child {
+        ///   margin-top: 0 !important; }
+        ///body &gt; *:last-child {
+        ///   margin-bottom: 0 !important; }
+        ///
+        ///a {
+        ///   color: #4183C4; }
+        ///a.absent {
+        ///   color: #cc0000; }
+        ///a.anchor {
+        ///   display: block;
+        ///   padding-left: 30px;
+        ///   margin-left: -30px;
+        ///   cursor: pointer;
+        ///   position: absolute;
+        ///   top: 0;
+        ///   left: 0;
+        ///   bottom: [나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string _default {
+            get {
+                return ResourceManager.GetString("_default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
         internal static System.Drawing.Bitmap ne {
