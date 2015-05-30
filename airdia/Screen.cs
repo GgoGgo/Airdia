@@ -10,12 +10,22 @@ namespace airdia
 {
     class Screen
     {
-        public Screen(PictureBox NotExist, WebBrowser MarkDownBrowse, RichTextBox EditBox, CheckBox ModeEdit)
+        // Singleton ( Design Pattern )
+        private static Screen instance;
+        private Screen(PictureBox NotExist, WebBrowser MarkDownBrowse, RichTextBox EditBox, CheckBox ModeEdit)
         {
             this.NotExist = NotExist;
             this.MarkDownBrowse = MarkDownBrowse;
             this.EditBox = EditBox;
             this.ModeEdit = ModeEdit;
+        }
+        public static Screen getInstance(PictureBox NotExist, WebBrowser MarkDownBrowse, RichTextBox EditBox, CheckBox ModeEdit)
+        {
+            if (instance == null)
+            {
+                instance = new Screen(NotExist, MarkDownBrowse, EditBox, ModeEdit);
+            }
+            return instance;
         }
 
         private PictureBox NotExist;

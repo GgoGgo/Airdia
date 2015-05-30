@@ -10,13 +10,23 @@ namespace airdia
 {
     class FileAgent
     {
-        public FileAgent(RichTextBox EditBox, DateTimePicker DatePicker, Screen Scene, TreeView FileTree)
+        // Singleton ( Design Pattern )
+        private static FileAgent instance;
+        private FileAgent(RichTextBox EditBox, DateTimePicker DatePicker, Screen Scene, TreeView FileTree)
         {
             rootPath = "C:\\";
             this.EditBox = EditBox;
             this.DatePicker = DatePicker;
             this.Scene = Scene;
             this.FileTree = FileTree;
+        }
+        public static FileAgent getInstance(RichTextBox EditBox, DateTimePicker DatePicker, Screen Scene, TreeView FileTree)
+        {
+            if (instance == null)
+            {
+                instance = new FileAgent( EditBox, DatePicker, Scene, FileTree);
+            }
+            return instance;
         }
 
         public string rootPath { set; get; }
@@ -54,13 +64,13 @@ namespace airdia
         {
             return rootPath + curDate.y + "\\" + curDate.m + "\\" + curDate.d + ".html";
         }
-        public object parseDate(DateTime curDate)
+        public Date parseDate(DateTime curDate)
         {
             string date = curDate.ToString("yyyy-MM-dd");
             string y = date.Substring(0, 4);
             string m = date.Substring(5, 2);
             string d = date.Substring(8, 2);
-            return new Date(y, m, d);
+            return Date.getInstance(y, m, d);
         }
     }
 }

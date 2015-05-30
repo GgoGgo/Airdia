@@ -23,12 +23,13 @@ namespace airdia
         private void MainForm_Load(object sender, EventArgs e)
         {
             EditBox.AcceptsTab = true;
-            Scene = new Screen( NotExist, MarkDownBrowse, EditBox, ModeEdit);
-            FileManage = new FileAgent( EditBox, DatePicker, Scene, FileTree);
+            Scene = Screen.getInstance( NotExist, MarkDownBrowse, EditBox, ModeEdit);
+            FileManage = FileAgent.getInstance( EditBox, DatePicker, Scene, FileTree);
         }
 
         Screen Scene;
         FileAgent FileManage;
+        Date curDate;
 
         protected override void WndProc(ref Message m)
         {
@@ -54,12 +55,12 @@ namespace airdia
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            Date curDate = (Date)FileManage.parseDate(DatePicker.Value);
+            curDate = (Date)FileManage.parseDate(DatePicker.Value);
             FileManage.SaveAt(FileManage.dateToFilePath(curDate));
         }
         private void DatePicker_ValueChanged(object sender, EventArgs e)
         {
-            Date curDate = (Date)FileManage.parseDate(DatePicker.Value);
+            curDate = (Date)FileManage.parseDate(DatePicker.Value);
             Scene.printScreenAt( FileManage.dateToFilePath(curDate) );
         }
         private void PathText_KeyDown(object sender, KeyEventArgs e)
@@ -73,7 +74,7 @@ namespace airdia
                 }
                 if (FileManage.rootPath != "C:\\" && FileManage.rootPath != "c:\\")
                 {
-                    Date curDate = (Date)FileManage.parseDate(DatePicker.Value);
+                    curDate = (Date)FileManage.parseDate(DatePicker.Value);
                     Scene.printScreenAt(FileManage.dateToFilePath(curDate));
                     Scene.printTreeAt(FileTree, FileManage.rootPath);
                 }
@@ -81,7 +82,7 @@ namespace airdia
         }
         private void ModeEdit_CheckedChanged(object sender, EventArgs e)
         {
-            Date curDate = (Date)FileManage.parseDate(DatePicker.Value);
+            curDate = (Date)FileManage.parseDate(DatePicker.Value);
 
             if (ModeEdit.Checked == true)
             {
@@ -132,7 +133,7 @@ namespace airdia
         {
             if (e.Control && e.KeyCode == Keys.S)
             {
-                Date curDate = (Date)FileManage.parseDate(DatePicker.Value);
+                curDate = (Date)FileManage.parseDate(DatePicker.Value);
                 FileManage.SaveAt( FileManage.dateToFilePath( curDate) );
             }
         }
