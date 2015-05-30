@@ -7,3 +7,4 @@ C:\dev\Airdia\airdia\obj\Release\airdia.csproj.GenerateResource.Cache
 C:\dev\Airdia\airdia\obj\Release\airdia.exe
 C:\dev\Airdia\airdia\obj\Release\airdia.pdb
 C:\dev\Airdia\airdia\bin\Release\CSS\default.css
+C:\dev\Airdia\airdia\obj\Release\airdia.csprojResolveAssemblyReference.cache

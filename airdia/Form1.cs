@@ -16,7 +16,7 @@ namespace airdia
     public partial class MainForm : Form
     {
         string curPath = "C:\\";
-        string curSubPath = "";
+        string curFilePath = "";
         string date = "";
         int count = 0;
 
@@ -54,13 +54,13 @@ namespace airdia
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            save();
+            Date curDate = (Date)parseDate(DatePicker.Value);
+            save(dateToFilePath(curDate));
         }
         private void DatePicker_ValueChanged(object sender, EventArgs e)
         {
             refreshDocs();
         }
-
         private void PathText_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -77,12 +77,13 @@ namespace airdia
             }
             refreshDocs();
         }
-
         private void ModeEdit_CheckedChanged(object sender, EventArgs e)
         {
             if (ModeEdit.Checked == true)
             {
-                save();
+                Date curDate = (Date)parseDate(DatePicker.Value);
+                save(dateToFilePath(curDate));
+
                 MarkDownBrowse.Visible = true;
                 EditBox.Visible = false;
                 
@@ -94,6 +95,43 @@ namespace airdia
             }
             refreshDocs();
         }
+        private void MarkDownBrowse_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            injectCss();
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (count-- <= 0)
+            {
+                Saved.Visible = false;
+                timer1.Stop();
+            }
+        }
+        private void FileTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Parent != null && e.Node.Parent.Parent != null && e.Node.Parent.Parent.GetType() == typeof(TreeNode))
+            {
+                string y = e.Node.Parent.Parent.Text;
+                string m = e.Node.Parent.Text;
+                string d = e.Node.Text.Substring(0, 2);
+                try
+                {
+                    DatePicker.Value = new DateTime(Convert.ToInt32(y), Convert.ToInt32(m), Convert.ToInt32(d));
+                }
+                catch (FormatException exception)
+                {
+                    return;
+                }
+            }
+        }
+        private void EditBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                Date curDate = (Date)parseDate(DatePicker.Value);
+                save( dateToFilePath( curDate) );
+            }
+        }
 
         private void refreshDocs()
         {
@@ -102,18 +140,17 @@ namespace airdia
             string m = date.Substring(5, 2);
             string d = date.Substring(8, 2);
 
-            curSubPath = y + "\\" + m + "\\" + d + ".html";
-            if (File.Exists(curPath + curSubPath))
+            curFilePath = y + "\\" + m + "\\" + d + ".html";
+            if (File.Exists(curPath + curFilePath))
             {
                 NotExist.Visible = false;
                 if (ModeEdit.Checked == true)
                 {
-                    //MarkDownBrowse.Url = new Uri(curPath + curSubPath);
-                    MarkDownBrowse.Navigate(curPath + curSubPath);
+                    MarkDownBrowse.Navigate(curPath + curFilePath);
                 }
                 else if (ModeEdit.Checked == false)
                 {
-                    string text = System.IO.File.ReadAllText(curPath+curSubPath);
+                    string text = System.IO.File.ReadAllText(curPath+curFilePath);
                     EditBox.Text = text;
                 }
             }
@@ -127,30 +164,53 @@ namespace airdia
         {
             ListDirectory(FileTree, curPath);
         }
-
-        private void save()
+        
+        private void save( string filePath )
         {
-            date = DatePicker.Value.ToString("yyyy-MM-dd");
-            string y = date.Substring(0, 4);
-            string m = date.Substring(5, 2);
-            string d = date.Substring(8, 2);
-
-            curSubPath = y + "\\" + m + "\\" + d + ".html";
-            if (!File.Exists(curPath + curSubPath))
+            if ( !File.Exists( filePath ) )
             {
-                Directory.CreateDirectory(curPath + y + "\\" + m);
-                File.Create(curPath + curSubPath).Close();
+                createFileAt( filePath );
+
                 string text = EditBox.Text;
-                System.IO.File.WriteAllText(curPath + curSubPath, text);
+                System.IO.File.WriteAllText( filePath, text );
+
                 refreshDocs();
                 refreshTree();
             }
             else
             {
                 string text = EditBox.Text;
-                System.IO.File.WriteAllText(curPath + curSubPath, text);
+                System.IO.File.WriteAllText( filePath, text);
             }
             ShowSavedText();
+        }
+        
+        private void createFileAt(string path)
+        {
+            Directory.CreateDirectory( path.Substring(0, path.LastIndexOf("\\") + 1) );
+            File.Create( path ).Close();
+        }
+
+        private string dateToFilePath( Date curDate )
+        {
+            return curPath + curDate.y + "\\" + curDate.m + "\\" + curDate.d + ".html";
+        }
+
+        private object parseDate(DateTime curDate){
+            date = curDate.ToString("yyyy-MM-dd");
+            string y = date.Substring(0, 4);
+            string m = date.Substring(5, 2);
+            string d = date.Substring(8, 2);
+            return new Date( y, m, d );
+        }
+
+        
+
+        private void ShowSavedText()
+        {
+            count = 30;
+            Saved.Visible = true;
+            timer1.Start();
         }
 
         protected override void WndProc(ref Message m)
@@ -191,51 +251,19 @@ namespace airdia
 
             treeView.Nodes.Add(node);
         }
-        
-        private void FileTree_AfterSelect(object sender, TreeViewEventArgs e)
+    }
+
+    class Date
+    {
+        public Date(string y, string m, string d)
         {
-            if (e.Node.Parent != null && e.Node.Parent.Parent != null && e.Node.Parent.Parent.GetType() == typeof(TreeNode))
-            {
-                string y = e.Node.Parent.Parent.Text;
-                string m = e.Node.Parent.Text;
-                string d = e.Node.Text.Substring(0, 2);
-                try
-                {
-                    DatePicker.Value = new DateTime(Convert.ToInt32(y), Convert.ToInt32(m), Convert.ToInt32(d));
-                }
-                catch (FormatException exception)
-                {
-                    return;
-                }
-            }
+            this.y = y;
+            this.m = m;
+            this.d = d;
         }
 
-        private void EditBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                save();
-            }
-        }
-
-        private void ShowSavedText(){
-            count = 0;
-            Saved.Visible = true;
-            timer1.Start();
-        }
-       
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (count++ > 30)
-            {
-                Saved.Visible = false;
-                timer1.Stop();
-            }
-        }
-
-        private void MarkDownBrowse_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            injectCss();
-        }
+        public string y { set; get; }
+        public string m { set; get; }
+        public string d { set; get; }
     }
 }
