@@ -1,9 +1,9 @@
 # Airdia
-static html diary program
+static html diary program for window <br>
+*[Download new release here!!](https://github.com/GgoGgo/Airdia/releases)*
 <hr>
 ## Start
-You can write down your diary with simple markup language. You need to create root folder of diary and input path to folder at 
-path navigator(which initialized with "C:/"). 
+You can write down your diary with simple markup language. You need to create root folder of diary and input path to folder at path navigator(which initialized with "C:/"). 
 <hr>
 ## Features
 You can browse diary with calender or tree. That will show document on screen. Click Checkbox
