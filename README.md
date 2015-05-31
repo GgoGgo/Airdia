@@ -13,10 +13,7 @@ You can browse diary with calender or tree. That will show document on screen. C
 ctrl + s : save
 <hr>
 ## TODO
-1. reforctoring
 3. take error exception to do not close program while at use
-4. wrap content with body tag by default
-1. inject meta data charset utf8
 2. image need to be imported to directory with file browser
 3. willing to add emmet like feature
 3. allow user to setup home directory( and make default one at c:/airdia )
