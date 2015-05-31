@@ -22,14 +22,20 @@ namespace airdia
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            images = new LinkedList<Image>();
+            images.AddLast(new Image(Saved, false));
+            images.AddLast(new Image(NotExist, true));
+
             EditBox.AcceptsTab = true;
-            Scene = Screen.getInstance( NotExist, MarkDownBrowse, EditBox, ModeEdit);
-            FileManage = FileAgent.getInstance( EditBox, DatePicker, Scene, FileTree);
+            screen = Screen.getInstance( MarkDownBrowse, EditBox, images );
+            FileManage = FileAgent.getInstance( FileTree, screen);
+            timer1.Start();
         }
 
-        Screen Scene;
+        Screen screen;
         FileAgent FileManage;
         Date curDate;
+        LinkedList<Image> images;
 
         protected override void WndProc(ref Message m)
         {
@@ -56,12 +62,12 @@ namespace airdia
         private void SaveButton_Click(object sender, EventArgs e)
         {
             curDate = (Date)FileManage.parseDate(DatePicker.Value);
-            FileManage.SaveAt(FileManage.dateToFilePath(curDate));
+            FileManage.SaveAt(FileManage.dateToFilePath(curDate), EditBox.Text, ModeEdit.Checked, DatePicker.Value);
         }
         private void DatePicker_ValueChanged(object sender, EventArgs e)
         {
             curDate = (Date)FileManage.parseDate(DatePicker.Value);
-            Scene.printScreenAt( FileManage.dateToFilePath(curDate) );
+            screen.printScreenAt( FileManage.dateToFilePath(curDate), ModeEdit.Checked );
         }
         private void PathText_KeyDown(object sender, KeyEventArgs e)
         {
@@ -75,8 +81,8 @@ namespace airdia
                 if (FileManage.rootPath != "C:\\" && FileManage.rootPath != "c:\\")
                 {
                     curDate = (Date)FileManage.parseDate(DatePicker.Value);
-                    Scene.printScreenAt(FileManage.dateToFilePath(curDate));
-                    Scene.printTreeAt(FileTree, FileManage.rootPath);
+                    screen.printScreenAt(FileManage.dateToFilePath(curDate), ModeEdit.Checked);
+                    screen.printTreeAt(FileTree, FileManage.rootPath);
                 }
             }
         }
@@ -86,7 +92,7 @@ namespace airdia
 
             if (ModeEdit.Checked == true)
             {
-                FileManage.SaveAt(FileManage.dateToFilePath(curDate));
+                FileManage.SaveAt(FileManage.dateToFilePath(curDate), EditBox.Text, ModeEdit.Checked, DatePicker.Value);
 
                 MarkDownBrowse.Visible = true;
                 EditBox.Visible = false;
@@ -98,19 +104,33 @@ namespace airdia
                 EditBox.Visible = true;
             }
 
-            Scene.printScreenAt( FileManage.dateToFilePath(curDate) );
+            screen.printScreenAt(FileManage.dateToFilePath(curDate), ModeEdit.Checked);
         }
         private void MarkDownBrowse_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            injectCss();
+            try
+            {
+                IHTMLDocument2 docs = (IHTMLDocument2)MarkDownBrowse.Document.DomDocument;
+                IHTMLStyleSheet ss = docs.createStyleSheet("", 0);
+                MarkDownBrowse.Document.CreateElement("body");
+
+                string tmp = Properties.Resources._default;
+                ss.cssText = tmp;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            /*if (count-- <= 0)
+            foreach( Image a in images )
             {
-                Saved.Visible = false;
-                timer1.Stop();
-            }*/
+                if( a.isStatic == false && a.timeToShow-- <= 0 )
+                {
+                    a.setVisible(false);
+                }
+            }
         }
         private void FileTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -134,22 +154,8 @@ namespace airdia
             if (e.Control && e.KeyCode == Keys.S)
             {
                 curDate = (Date)FileManage.parseDate(DatePicker.Value);
-                FileManage.SaveAt( FileManage.dateToFilePath( curDate) );
+                FileManage.SaveAt(FileManage.dateToFilePath(curDate), EditBox.Text, ModeEdit.Checked, DatePicker.Value);
             }
         }
-        private void injectCss()
-        {
-            try
-            {
-                HTMLDocument docs = (HTMLDocument)MarkDownBrowse.Document.DomDocument;
-                IHTMLStyleSheet ss = docs.createStyleSheet("", 0);
-                string tmp = Properties.Resources._default;
-                ss.cssText = tmp;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }//get it to Screen class
     }
 }

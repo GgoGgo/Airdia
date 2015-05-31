@@ -12,37 +12,35 @@ namespace airdia
     {
         // Singleton ( Design Pattern )
         private static Screen instance;
-        private Screen(PictureBox NotExist, WebBrowser MarkDownBrowse, RichTextBox EditBox, CheckBox ModeEdit)
+        private Screen(WebBrowser MarkDownBrowse, RichTextBox EditBox, LinkedList<Image> images)
         {
-            this.NotExist = NotExist;
             this.MarkDownBrowse = MarkDownBrowse;
             this.EditBox = EditBox;
-            this.ModeEdit = ModeEdit;
+            this.images = images;
         }
-        public static Screen getInstance(PictureBox NotExist, WebBrowser MarkDownBrowse, RichTextBox EditBox, CheckBox ModeEdit)
+        public static Screen getInstance(WebBrowser MarkDownBrowse, RichTextBox EditBox, LinkedList<Image> images)
         {
             if (instance == null)
             {
-                instance = new Screen(NotExist, MarkDownBrowse, EditBox, ModeEdit);
+                instance = new Screen(MarkDownBrowse, EditBox, images);
             }
             return instance;
         }
 
-        private PictureBox NotExist;
         private WebBrowser MarkDownBrowse;
         private RichTextBox EditBox;
-        private CheckBox ModeEdit;
+        private LinkedList<Image> images;
 
-        public void printScreenAt(string filePath)
+        public void printScreenAt(string filePath, Boolean showMode)
         {
             if (File.Exists(filePath))
             {
-                NotExist.Visible = false;
-                if (ModeEdit.Checked == true)
+                images.ElementAt(1).setVisible(false);
+                if (showMode == true)
                 {
                     MarkDownBrowse.Navigate(filePath);
                 }
-                else if (ModeEdit.Checked == false)
+                else if (showMode == false)
                 {
                     string text = System.IO.File.ReadAllText(filePath);
                     EditBox.Text = text;
@@ -50,7 +48,7 @@ namespace airdia
             }
             else
             {
-                NotExist.Visible = true;
+                images.ElementAt(1).setVisible(true);
                 MarkDownBrowse.Navigate("about:blank");
                 EditBox.Text = "";
             }
@@ -80,14 +78,11 @@ namespace airdia
 
             treeView.Nodes.Add(node);
         }
-        /*
-        int count = 0;
-        private void ShowSavedText()
+
+        public void ShowSavedText()
         {
-            count = 30;
-            Saved.Visible = true;
-            timer1.Start();
+            images.ElementAt(0).timeToShow = 30;
+            images.ElementAt(0).setVisible(true);
         }
-        */
     }
 }

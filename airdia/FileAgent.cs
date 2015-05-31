@@ -12,48 +12,44 @@ namespace airdia
     {
         // Singleton ( Design Pattern )
         private static FileAgent instance;
-        private FileAgent(RichTextBox EditBox, DateTimePicker DatePicker, Screen Scene, TreeView FileTree)
+        private FileAgent( TreeView FileTree, Screen screen)
         {
             rootPath = "C:\\";
-            this.EditBox = EditBox;
-            this.DatePicker = DatePicker;
-            this.Scene = Scene;
             this.FileTree = FileTree;
+            this.screen = screen;
         }
-        public static FileAgent getInstance(RichTextBox EditBox, DateTimePicker DatePicker, Screen Scene, TreeView FileTree)
+        public static FileAgent getInstance(TreeView FileTree, Screen screen)
         {
             if (instance == null)
             {
-                instance = new FileAgent( EditBox, DatePicker, Scene, FileTree);
+                instance = new FileAgent(FileTree, screen);
             }
             return instance;
         }
 
         public string rootPath { set; get; }
-        private RichTextBox EditBox;
-        private DateTimePicker DatePicker;
         private TreeView FileTree;
-        private Screen Scene;
+        private Screen screen;
 
-        public void SaveAt(string filePath)
+        public void SaveAt(string filePath, string editedText, Boolean showMode, DateTime date)
         {
             if (!File.Exists(filePath))
             {
                 createFileAt(filePath);
 
-                string text = EditBox.Text;
+                string text = editedText;
                 System.IO.File.WriteAllText(filePath, text);
 
-                Date curDate = (Date)parseDate(DatePicker.Value);
-                Scene.printScreenAt(dateToFilePath(curDate));
-                Scene.printTreeAt(FileTree, rootPath);
+                Date curDate = (Date)parseDate(date);
+                screen.printScreenAt(dateToFilePath(curDate), showMode);
+                screen.printTreeAt(FileTree, rootPath);
             }
             else
             {
-                string text = EditBox.Text;
+                string text = editedText;
                 System.IO.File.WriteAllText(filePath, text);
             }
-            //Scene.ShowSavedText();
+            screen.ShowSavedText();
         }
         public void createFileAt(string path)
         {
