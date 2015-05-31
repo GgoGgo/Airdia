@@ -61,7 +61,7 @@ namespace airdia.Properties {
         }
         
         /// <summary>
-        ///   body {
+        ///   html {
         ///   font-family: 나눔고딕;
         ///   font-size: 14px;
         ///   line-height: 1.6;
@@ -70,9 +70,9 @@ namespace airdia.Properties {
         ///   background-color: white;
         ///   padding: 30px;}
         ///
-        ///body &gt; *:first-child {
+        ///html &gt; *:first-child {
         ///   margin-top: 0 !important; }
-        ///body &gt; *:last-child {
+        ///html &gt; *:last-child {
         ///   margin-bottom: 0 !important; }
         ///
         ///a {

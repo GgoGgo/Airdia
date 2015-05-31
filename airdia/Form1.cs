@@ -84,6 +84,9 @@ namespace airdia
                     screen.printScreenAt(FileManage.dateToFilePath(curDate), ModeEdit.Checked);
                     screen.printTreeAt(FileTree, FileManage.rootPath);
                 }
+
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
         private void ModeEdit_CheckedChanged(object sender, EventArgs e)
